@@ -21,7 +21,6 @@ test("counter increments and decrements when buttons are clicked", () => {
   const message = screen.getByText((content) =>
     content.startsWith("Current count:")
   );
-  // console.log(message.innerHTML);
 
   expect(message).toHaveTextContent("Current count: 0");
   fireEvent.click(increment);
@@ -38,11 +37,26 @@ test("counter works with different initial value", () => {
   const message = screen.getByText((content) =>
     content.startsWith("Current count:")
   );
-  // console.log(message.innerHTML);
 
   expect(message).toHaveTextContent("Current count: 3");
   fireEvent.click(increment);
   expect(message).toHaveTextContent("Current count: 4");
   fireEvent.click(decrement);
   expect(message).toHaveTextContent("Current count: 3");
+});
+
+test("counter works with different step", () => {
+  render(<UseCounter step={5} />);
+
+  const decrement = screen.getByRole("button", { name: "Decrement" });
+  const increment = screen.getByRole("button", { name: "Increment" });
+  const message = screen.getByText((content) =>
+    content.startsWith("Current count:")
+  );
+
+  expect(message).toHaveTextContent("Current count: 0");
+  fireEvent.click(increment);
+  expect(message).toHaveTextContent("Current count: 5");
+  fireEvent.click(decrement);
+  expect(message).toHaveTextContent("Current count: 0");
 });
